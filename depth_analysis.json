@@ -1,0 +1,1052 @@
+[
+  {
+    "currency": "VET",
+    "buy_market": {
+      "symbol": "VETUSDT",
+      "pair": "KC-VET_USDT",
+      "base_currency": "USDT",
+      "bid_levels": [
+        {
+          "price": 0.02031,
+          "volume": 210536.7,
+          "price_inr": 1.7876862,
+          "cumulative": 210536.7,
+          "volume_inr": 376373.55318354
+        },
+        {
+          "price": 0.0203,
+          "volume": 247289.6,
+          "price_inr": 1.786806,
+          "cumulative": 457826.30000000005,
+          "volume_inr": 441858.5410176
+        },
+        {
+          "price": 0.02029,
+          "volume": 252666.6,
+          "price_inr": 1.7859257999999998,
+          "cumulative": 710492.9,
+          "volume_inr": 451243.79973827995
+        },
+        {
+          "price": 0.02028,
+          "volume": 229940.8,
+          "price_inr": 1.7850456,
+          "cumulative": 940433.7,
+          "volume_inr": 410454.81330047996
+        },
+        {
+          "price": 0.02027,
+          "volume": 288007.3,
+          "price_inr": 1.7841654,
+          "cumulative": 1228441,
+          "volume_inr": 513852.65960742
+        },
+        {
+          "price": 0.02026,
+          "volume": 334983.1,
+          "price_inr": 1.7832852,
+          "cumulative": 1563424.1,
+          "volume_inr": 597370.4044801199
+        },
+        {
+          "price": 0.02025,
+          "volume": 276770.9,
+          "price_inr": 1.782405,
+          "cumulative": 1840195,
+          "volume_inr": 493317.83601450006
+        },
+        {
+          "price": 0.02024,
+          "volume": 423726.8,
+          "price_inr": 1.7815248,
+          "cumulative": 2263921.8,
+          "volume_inr": 754879.8026246399
+        },
+        {
+          "price": 0.02023,
+          "volume": 134700.2,
+          "price_inr": 1.7806446,
+          "cumulative": 2398622,
+          "volume_inr": 239853.18374892
+        },
+        {
+          "price": 0.02022,
+          "volume": 492189.5,
+          "price_inr": 1.7797643999999997,
+          "cumulative": 2890811.5,
+          "volume_inr": 875981.3501537999
+        }
+      ],
+      "ask_levels": [
+        {
+          "price": 0.02032,
+          "volume": 36358,
+          "price_inr": 1.7885664000000001,
+          "cumulative": 36358,
+          "volume_inr": 65028.6971712
+        },
+        {
+          "price": 0.02033,
+          "volume": 587766.7,
+          "price_inr": 1.7894466,
+          "cumulative": 624124.7,
+          "volume_inr": 1051777.12290822
+        },
+        {
+          "price": 0.02034,
+          "volume": 641938.8,
+          "price_inr": 1.7903267999999999,
+          "cumulative": 1266063.5,
+          "volume_inr": 1149280.23759984
+        },
+        {
+          "price": 0.02035,
+          "volume": 651218,
+          "price_inr": 1.791207,
+          "cumulative": 1917281.5,
+          "volume_inr": 1166466.240126
+        },
+        {
+          "price": 0.02036,
+          "volume": 509838.9,
+          "price_inr": 1.7920871999999999,
+          "cumulative": 2427120.4,
+          "volume_inr": 913675.76675208
+        },
+        {
+          "price": 0.02037,
+          "volume": 305700.2,
+          "price_inr": 1.7929673999999998,
+          "cumulative": 2732820.6,
+          "volume_inr": 548110.4927734799
+        },
+        {
+          "price": 0.02038,
+          "volume": 167226.9,
+          "price_inr": 1.7938475999999999,
+          "cumulative": 2900047.5,
+          "volume_inr": 299979.57322043995
+        },
+        {
+          "price": 0.02039,
+          "volume": 740407.5,
+          "price_inr": 1.7947277999999998,
+          "cumulative": 3640455,
+          "volume_inr": 1328829.9235784998
+        },
+        {
+          "price": 0.0204,
+          "volume": 435904.9,
+          "price_inr": 1.795608,
+          "cumulative": 4076359.9,
+          "volume_inr": 782714.3256792001
+        },
+        {
+          "price": 0.02041,
+          "volume": 500520.6,
+          "price_inr": 1.7964882,
+          "cumulative": 4576880.5,
+          "volume_inr": 899179.35175692
+        }
+      ],
+      "best_bid": 0.02031,
+      "best_ask": 0.02032,
+      "best_bid_inr": 1.7876862,
+      "best_ask_inr": 1.7885664000000001,
+      "spread": 0.000009999999999999593,
+      "spread_pct": 0.04921259842519484,
+      "total_bid_volume": 2890811.5,
+      "total_ask_volume": 4576880.5,
+      "timestamp": "2025-07-03T11:30:17.863164587+05:30"
+    },
+    "sell_market": {
+      "symbol": "VETETH",
+      "pair": "KC-VET_ETH",
+      "base_currency": "ETH",
+      "bid_levels": [
+        {
+          "price": 0.00000839,
+          "volume": 4050,
+          "price_inr": 1.909103389,
+          "cumulative": 4050,
+          "volume_inr": 7731.86872545
+        },
+        {
+          "price": 0.00000838,
+          "volume": 4920,
+          "price_inr": 1.906827938,
+          "cumulative": 8970,
+          "volume_inr": 9381.59345496
+        },
+        {
+          "price": 0.00000837,
+          "volume": 163222,
+          "price_inr": 1.904552487,
+          "cumulative": 172192,
+          "volume_inr": 310864.86603311397
+        },
+        {
+          "price": 0.00000836,
+          "volume": 173195,
+          "price_inr": 1.9022770359999999,
+          "cumulative": 345387,
+          "volume_inr": 329464.87125002
+        },
+        {
+          "price": 0.00000834,
+          "volume": 1440,
+          "price_inr": 1.897726134,
+          "cumulative": 346827,
+          "volume_inr": 2732.72563296
+        },
+        {
+          "price": 0.00000833,
+          "volume": 4770,
+          "price_inr": 1.895450683,
+          "cumulative": 351597,
+          "volume_inr": 9041.29975791
+        },
+        {
+          "price": 0.00000832,
+          "volume": 301018,
+          "price_inr": 1.893175232,
+          "cumulative": 652615,
+          "volume_inr": 569879.821986176
+        },
+        {
+          "price": 0.00000831,
+          "volume": 84819,
+          "price_inr": 1.8908997810000001,
+          "cumulative": 737434,
+          "volume_inr": 160384.228524639
+        },
+        {
+          "price": 0.0000083,
+          "volume": 193,
+          "price_inr": 1.88862433,
+          "cumulative": 737627,
+          "volume_inr": 364.50449569
+        },
+        {
+          "price": 0.00000829,
+          "volume": 1671,
+          "price_inr": 1.886348879,
+          "cumulative": 739298,
+          "volume_inr": 3152.088976809
+        }
+      ],
+      "ask_levels": [
+        {
+          "price": 0.00000842,
+          "volume": 5882,
+          "price_inr": 1.915929742,
+          "cumulative": 5882,
+          "volume_inr": 11269.498742444
+        },
+        {
+          "price": 0.00000843,
+          "volume": 5073,
+          "price_inr": 1.9182051930000001,
+          "cumulative": 10955,
+          "volume_inr": 9731.054944089
+        },
+        {
+          "price": 0.00000845,
+          "volume": 5241,
+          "price_inr": 1.9227560950000002,
+          "cumulative": 16196,
+          "volume_inr": 10077.164693895002
+        },
+        {
+          "price": 0.00000846,
+          "volume": 169916,
+          "price_inr": 1.925031546,
+          "cumulative": 186112,
+          "volume_inr": 327093.660170136
+        },
+        {
+          "price": 0.00000848,
+          "volume": 656,
+          "price_inr": 1.9295824480000001,
+          "cumulative": 186768,
+          "volume_inr": 1265.806085888
+        },
+        {
+          "price": 0.00000849,
+          "volume": 189,
+          "price_inr": 1.9318578990000002,
+          "cumulative": 186957,
+          "volume_inr": 365.12114291100005
+        },
+        {
+          "price": 0.0000085,
+          "volume": 2119,
+          "price_inr": 1.93413335,
+          "cumulative": 189076,
+          "volume_inr": 4098.42856865
+        },
+        {
+          "price": 0.00000851,
+          "volume": 87309,
+          "price_inr": 1.936408801,
+          "cumulative": 276385,
+          "volume_inr": 169065.916006509
+        },
+        {
+          "price": 0.00000852,
+          "volume": 7970,
+          "price_inr": 1.938684252,
+          "cumulative": 284355,
+          "volume_inr": 15451.31348844
+        },
+        {
+          "price": 0.00000853,
+          "volume": 190,
+          "price_inr": 1.9409597029999999,
+          "cumulative": 284545,
+          "volume_inr": 368.78234356999997
+        }
+      ],
+      "best_bid": 0.00000839,
+      "best_ask": 0.00000842,
+      "best_bid_inr": 1.909103389,
+      "best_ask_inr": 1.915929742,
+      "spread": 3.000000000000141e-8,
+      "spread_pct": 0.3562945368171188,
+      "total_bid_volume": 739298,
+      "total_ask_volume": 284545,
+      "timestamp": "2025-07-03T11:30:18.459269711+05:30"
+    },
+    "order_simulations": [
+      {
+        "order_number": 1,
+        "buy_price": 1.7885664000000001,
+        "sell_price": 1.909103389,
+        "volume": 4050,
+        "volume_inr": 7243.693920000001,
+        "gross_margin": 0.12053698899999987,
+        "gross_margin_pct": 6.739307469937927,
+        "estimated_fees": 144.87387840000002,
+        "net_margin": 343.3009270499995,
+        "net_margin_pct": 4.739307469937927,
+        "profitable": true,
+        "cumulative": {
+          "volume": 4050,
+          "volume_inr": 7243.693920000001,
+          "net_profit": 343.3009270499995
+        }
+      },
+      {
+        "order_number": 2,
+        "buy_price": 1.7885664000000001,
+        "sell_price": 1.906827938,
+        "volume": 4920,
+        "volume_inr": 8799.746688000001,
+        "gross_margin": 0.11826153799999983,
+        "gross_margin_pct": 6.612085410974948,
+        "estimated_fees": 175.99493376000004,
+        "net_margin": 405.85183319999913,
+        "net_margin_pct": 4.612085410974947,
+        "profitable": true,
+        "cumulative": {
+          "volume": 8970,
+          "volume_inr": 16043.440608,
+          "net_profit": 749.1527602499987
+        }
+      },
+      {
+        "order_number": 3,
+        "buy_price": 1.7885664000000001,
+        "sell_price": 1.904552487,
+        "volume": 36358,
+        "volume_inr": 65028.6971712,
+        "gross_margin": 0.1159860869999998,
+        "gross_margin_pct": 6.484863352011969,
+        "estimated_fees": 1300.5739434240002,
+        "net_margin": 2916.448207721992,
+        "net_margin_pct": 4.484863352011968,
+        "profitable": true,
+        "cumulative": {
+          "volume": 45328,
+          "volume_inr": 81072.1377792,
+          "net_profit": 3665.6009679719905
+        }
+      },
+      {
+        "order_number": 4,
+        "buy_price": 1.7894466,
+        "sell_price": 1.904552487,
+        "volume": 163222,
+        "volume_inr": 292077.0529452,
+        "gross_margin": 0.1151058869999999,
+        "gross_margin_pct": 6.432485160495983,
+        "estimated_fees": 5841.541058904,
+        "net_margin": 12946.272029009986,
+        "net_margin_pct": 4.432485160495983,
+        "profitable": true,
+        "cumulative": {
+          "volume": 208550,
+          "volume_inr": 373149.1907244,
+          "net_profit": 16611.872996981976
+        }
+      },
+      {
+        "order_number": 5,
+        "buy_price": 1.7894466,
+        "sell_price": 1.9022770359999999,
+        "volume": 173195,
+        "volume_inr": 309923.203887,
+        "gross_margin": 0.11283043599999987,
+        "gross_margin_pct": 6.30532568001749,
+        "estimated_fees": 6198.46407774,
+        "net_margin": 13343.203285279977,
+        "net_margin_pct": 4.305325680017491,
+        "profitable": true,
+        "cumulative": {
+          "volume": 381745,
+          "volume_inr": 683072.3946114,
+          "net_profit": 29955.07628226195
+        }
+      },
+      {
+        "order_number": 6,
+        "buy_price": 1.7894466,
+        "sell_price": 1.897726134,
+        "volume": 1440,
+        "volume_inr": 2576.803104,
+        "gross_margin": 0.10827953400000001,
+        "gross_margin_pct": 6.051006719060519,
+        "estimated_fees": 51.53606208,
+        "net_margin": 104.38646688000003,
+        "net_margin_pct": 4.05100671906052,
+        "profitable": true,
+        "cumulative": {
+          "volume": 383185,
+          "volume_inr": 685649.1977154,
+          "net_profit": 30059.462749141952
+        }
+      },
+      {
+        "order_number": 7,
+        "buy_price": 1.7894466,
+        "sell_price": 1.895450683,
+        "volume": 4770,
+        "volume_inr": 8535.660282,
+        "gross_margin": 0.10600408299999997,
+        "gross_margin_pct": 5.923847238582027,
+        "estimated_fees": 170.71320564,
+        "net_margin": 334.92627026999986,
+        "net_margin_pct": 3.923847238582027,
+        "profitable": true,
+        "cumulative": {
+          "volume": 387955,
+          "volume_inr": 694184.8579974,
+          "net_profit": 30394.389019411952
+        }
+      },
+      {
+        "order_number": 8,
+        "buy_price": 1.7894466,
+        "sell_price": 1.893175232,
+        "volume": 301018,
+        "volume_inr": 538655.6366388,
+        "gross_margin": 0.10372863199999993,
+        "gross_margin_pct": 5.796687758103535,
+        "estimated_fees": 10773.112732776,
+        "net_margin": 20451.07261459998,
+        "net_margin_pct": 3.796687758103535,
+        "profitable": true,
+        "cumulative": {
+          "volume": 688973,
+          "volume_inr": 1232840.4946362,
+          "net_profit": 50845.46163401193
+        }
+      },
+      {
+        "order_number": 9,
+        "buy_price": 1.7894466,
+        "sell_price": 1.8908997810000001,
+        "volume": 84819,
+        "volume_inr": 151779.0711654,
+        "gross_margin": 0.10145318100000011,
+        "gross_margin_pct": 5.669528277625056,
+        "estimated_fees": 3035.581423308,
+        "net_margin": 5569.5759359310105,
+        "net_margin_pct": 3.669528277625056,
+        "profitable": true,
+        "cumulative": {
+          "volume": 773792,
+          "volume_inr": 1384619.5658016,
+          "net_profit": 56415.03756994294
+        }
+      },
+      {
+        "order_number": 10,
+        "buy_price": 1.7894466,
+        "sell_price": 1.88862433,
+        "volume": 193,
+        "volume_inr": 345.3631938,
+        "gross_margin": 0.09917773000000007,
+        "gross_margin_pct": 5.542368797146564,
+        "estimated_fees": 6.907263876,
+        "net_margin": 12.234038014000015,
+        "net_margin_pct": 3.542368797146564,
+        "profitable": true,
+        "cumulative": {
+          "volume": 773985,
+          "volume_inr": 1384964.9289954,
+          "net_profit": 56427.27160795694
+        }
+      },
+      {
+        "order_number": 11,
+        "buy_price": 1.7894466,
+        "sell_price": 1.886348879,
+        "volume": 1671,
+        "volume_inr": 2990.1652686,
+        "gross_margin": 0.09690227900000004,
+        "gross_margin_pct": 5.415209316668071,
+        "estimated_fees": 59.803305372000004,
+        "net_margin": 102.12040283700006,
+        "net_margin_pct": 3.4152093166680713,
+        "profitable": true,
+        "cumulative": {
+          "volume": 775656,
+          "volume_inr": 1387955.094264,
+          "net_profit": 56529.39201079394
+        }
+      }
+    ],
+    "max_profitable_orders": 11,
+    "total_profitable_volume": 775656,
+    "total_estimated_profit": 56529.39201079394,
+    "bottleneck_side": "sell",
+    "opportunity_rating": "excellent",
+    "timestamp": "2025-07-03T11:30:18.645764659+05:30"
+  },
+  {
+    "currency": "VET",
+    "buy_market": {
+      "symbol": "VETUSDT",
+      "pair": "KC-VET_USDT",
+      "base_currency": "USDT",
+      "bid_levels": [
+        {
+          "price": 0.02031,
+          "volume": 210536.7,
+          "price_inr": 1.7876862,
+          "cumulative": 210536.7,
+          "volume_inr": 376373.55318354
+        },
+        {
+          "price": 0.0203,
+          "volume": 247289.6,
+          "price_inr": 1.786806,
+          "cumulative": 457826.30000000005,
+          "volume_inr": 441858.5410176
+        },
+        {
+          "price": 0.02029,
+          "volume": 252666.6,
+          "price_inr": 1.7859257999999998,
+          "cumulative": 710492.9,
+          "volume_inr": 451243.79973827995
+        },
+        {
+          "price": 0.02028,
+          "volume": 229940.8,
+          "price_inr": 1.7850456,
+          "cumulative": 940433.7,
+          "volume_inr": 410454.81330047996
+        },
+        {
+          "price": 0.02027,
+          "volume": 288007.3,
+          "price_inr": 1.7841654,
+          "cumulative": 1228441,
+          "volume_inr": 513852.65960742
+        },
+        {
+          "price": 0.02026,
+          "volume": 334983.1,
+          "price_inr": 1.7832852,
+          "cumulative": 1563424.1,
+          "volume_inr": 597370.4044801199
+        },
+        {
+          "price": 0.02025,
+          "volume": 276770.9,
+          "price_inr": 1.782405,
+          "cumulative": 1840195,
+          "volume_inr": 493317.83601450006
+        },
+        {
+          "price": 0.02024,
+          "volume": 423726.8,
+          "price_inr": 1.7815248,
+          "cumulative": 2263921.8,
+          "volume_inr": 754879.8026246399
+        },
+        {
+          "price": 0.02023,
+          "volume": 134700.2,
+          "price_inr": 1.7806446,
+          "cumulative": 2398622,
+          "volume_inr": 239853.18374892
+        },
+        {
+          "price": 0.02022,
+          "volume": 492189.5,
+          "price_inr": 1.7797643999999997,
+          "cumulative": 2890811.5,
+          "volume_inr": 875981.3501537999
+        }
+      ],
+      "ask_levels": [
+        {
+          "price": 0.02032,
+          "volume": 36358,
+          "price_inr": 1.7885664000000001,
+          "cumulative": 36358,
+          "volume_inr": 65028.6971712
+        },
+        {
+          "price": 0.02033,
+          "volume": 587766.7,
+          "price_inr": 1.7894466,
+          "cumulative": 624124.7,
+          "volume_inr": 1051777.12290822
+        },
+        {
+          "price": 0.02034,
+          "volume": 641938.8,
+          "price_inr": 1.7903267999999999,
+          "cumulative": 1266063.5,
+          "volume_inr": 1149280.23759984
+        },
+        {
+          "price": 0.02035,
+          "volume": 651218,
+          "price_inr": 1.791207,
+          "cumulative": 1917281.5,
+          "volume_inr": 1166466.240126
+        },
+        {
+          "price": 0.02036,
+          "volume": 509838.9,
+          "price_inr": 1.7920871999999999,
+          "cumulative": 2427120.4,
+          "volume_inr": 913675.76675208
+        },
+        {
+          "price": 0.02037,
+          "volume": 305700.2,
+          "price_inr": 1.7929673999999998,
+          "cumulative": 2732820.6,
+          "volume_inr": 548110.4927734799
+        },
+        {
+          "price": 0.02038,
+          "volume": 167226.9,
+          "price_inr": 1.7938475999999999,
+          "cumulative": 2900047.5,
+          "volume_inr": 299979.57322043995
+        },
+        {
+          "price": 0.02039,
+          "volume": 740407.5,
+          "price_inr": 1.7947277999999998,
+          "cumulative": 3640455,
+          "volume_inr": 1328829.9235784998
+        },
+        {
+          "price": 0.0204,
+          "volume": 435904.9,
+          "price_inr": 1.795608,
+          "cumulative": 4076359.9,
+          "volume_inr": 782714.3256792001
+        },
+        {
+          "price": 0.02041,
+          "volume": 500520.6,
+          "price_inr": 1.7964882,
+          "cumulative": 4576880.5,
+          "volume_inr": 899179.35175692
+        }
+      ],
+      "best_bid": 0.02031,
+      "best_ask": 0.02032,
+      "best_bid_inr": 1.7876862,
+      "best_ask_inr": 1.7885664000000001,
+      "spread": 0.000009999999999999593,
+      "spread_pct": 0.04921259842519484,
+      "total_bid_volume": 2890811.5,
+      "total_ask_volume": 4576880.5,
+      "timestamp": "2025-07-03T11:30:17.863164587+05:30"
+    },
+    "sell_market": {
+      "symbol": "VETINR",
+      "pair": "I-VET_INR",
+      "base_currency": "INR",
+      "bid_levels": [
+        {
+          "price": 1.95,
+          "volume": 14497.6,
+          "price_inr": 1.95,
+          "cumulative": 14497.6,
+          "volume_inr": 28270.32
+        },
+        {
+          "price": 1.936,
+          "volume": 11792.6,
+          "price_inr": 1.936,
+          "cumulative": 26290.2,
+          "volume_inr": 22830.4736
+        },
+        {
+          "price": 1.935,
+          "volume": 4545.9,
+          "price_inr": 1.935,
+          "cumulative": 30836.1,
+          "volume_inr": 8796.316499999999
+        },
+        {
+          "price": 1.932,
+          "volume": 22837.21,
+          "price_inr": 1.932,
+          "cumulative": 53673.31,
+          "volume_inr": 44121.48972
+        },
+        {
+          "price": 1.93,
+          "volume": 31894.6,
+          "price_inr": 1.93,
+          "cumulative": 85567.91,
+          "volume_inr": 61556.577999999994
+        },
+        {
+          "price": 1.92,
+          "volume": 49470.97,
+          "price_inr": 1.92,
+          "cumulative": 135038.88,
+          "volume_inr": 94984.26239999999
+        },
+        {
+          "price": 1.91,
+          "volume": 66688.8,
+          "price_inr": 1.91,
+          "cumulative": 201727.68,
+          "volume_inr": 127375.60800000001
+        },
+        {
+          "price": 1.9,
+          "volume": 523.52,
+          "price_inr": 1.9,
+          "cumulative": 202251.19999999998,
+          "volume_inr": 994.6879999999999
+        },
+        {
+          "price": 1.89,
+          "volume": 84085.9,
+          "price_inr": 1.89,
+          "cumulative": 286337.1,
+          "volume_inr": 158922.351
+        },
+        {
+          "price": 1.88,
+          "volume": 101483,
+          "price_inr": 1.88,
+          "cumulative": 387820.1,
+          "volume_inr": 190788.03999999998
+        }
+      ],
+      "ask_levels": [
+        {
+          "price": 1.976,
+          "volume": 22307.6,
+          "price_inr": 1.976,
+          "cumulative": 22307.6,
+          "volume_inr": 44079.817599999995
+        },
+        {
+          "price": 1.977,
+          "volume": 17177.84,
+          "price_inr": 1.977,
+          "cumulative": 39485.44,
+          "volume_inr": 33960.589680000005
+        },
+        {
+          "price": 1.98,
+          "volume": 21096.5,
+          "price_inr": 1.98,
+          "cumulative": 60581.94,
+          "volume_inr": 41771.07
+        },
+        {
+          "price": 1.99,
+          "volume": 131762.5,
+          "price_inr": 1.99,
+          "cumulative": 192344.44,
+          "volume_inr": 262207.375
+        },
+        {
+          "price": 2,
+          "volume": 51174.5,
+          "price_inr": 2,
+          "cumulative": 243518.94,
+          "volume_inr": 102349
+        },
+        {
+          "price": 2.02,
+          "volume": 66412.5,
+          "price_inr": 2.02,
+          "cumulative": 309931.44,
+          "volume_inr": 134153.25
+        },
+        {
+          "price": 2.03,
+          "volume": 83737.5,
+          "price_inr": 2.03,
+          "cumulative": 393668.94,
+          "volume_inr": 169987.12499999997
+        },
+        {
+          "price": 2.0305,
+          "volume": 515.4,
+          "price_inr": 2.0305,
+          "cumulative": 394184.34,
+          "volume_inr": 1046.5196999999998
+        },
+        {
+          "price": 2.046,
+          "volume": 80,
+          "price_inr": 2.046,
+          "cumulative": 394264.34,
+          "volume_inr": 163.67999999999998
+        },
+        {
+          "price": 2.05,
+          "volume": 101062.5,
+          "price_inr": 2.05,
+          "cumulative": 495326.84,
+          "volume_inr": 207178.12499999997
+        }
+      ],
+      "best_bid": 1.95,
+      "best_ask": 1.976,
+      "best_bid_inr": 1.95,
+      "best_ask_inr": 1.976,
+      "spread": 0.026000000000000023,
+      "spread_pct": 1.3157894736842117,
+      "total_bid_volume": 387820.1,
+      "total_ask_volume": 495326.84,
+      "timestamp": "2025-07-03T11:30:18.645502769+05:30"
+    },
+    "order_simulations": [
+      {
+        "order_number": 1,
+        "buy_price": 1.7885664000000001,
+        "sell_price": 1.95,
+        "volume": 14497.6,
+        "volume_inr": 25929.920240640004,
+        "gross_margin": 0.16143359999999984,
+        "gross_margin_pct": 9.025865631826688,
+        "estimated_fees": 518.5984048128,
+        "net_margin": 1821.801354547198,
+        "net_margin_pct": 7.025865631826687,
+        "profitable": true,
+        "cumulative": {
+          "volume": 14497.6,
+          "volume_inr": 25929.920240640004,
+          "net_profit": 1821.801354547198
+        }
+      },
+      {
+        "order_number": 2,
+        "buy_price": 1.7885664000000001,
+        "sell_price": 1.936,
+        "volume": 11792.6,
+        "volume_inr": 21091.848128640002,
+        "gross_margin": 0.14743359999999983,
+        "gross_margin_pct": 8.243115827290495,
+        "estimated_fees": 421.8369625728001,
+        "net_margin": 1316.788508787198,
+        "net_margin_pct": 6.243115827290495,
+        "profitable": true,
+        "cumulative": {
+          "volume": 26290.2,
+          "volume_inr": 47021.768369280006,
+          "net_profit": 3138.589863334396
+        }
+      },
+      {
+        "order_number": 3,
+        "buy_price": 1.7885664000000001,
+        "sell_price": 1.935,
+        "volume": 4545.9,
+        "volume_inr": 8130.64399776,
+        "gross_margin": 0.14643359999999994,
+        "gross_margin_pct": 8.187205126966488,
+        "estimated_fees": 162.61287995520001,
+        "net_margin": 503.0596222847996,
+        "net_margin_pct": 6.187205126966487,
+        "profitable": true,
+        "cumulative": {
+          "volume": 30836.1,
+          "volume_inr": 55152.41236704001,
+          "net_profit": 3641.6494856191957
+        }
+      },
+      {
+        "order_number": 4,
+        "buy_price": 1.7885664000000001,
+        "sell_price": 1.932,
+        "volume": 22837.21,
+        "volume_inr": 40845.866475744,
+        "gross_margin": 0.14343359999999983,
+        "gross_margin_pct": 8.01947302599444,
+        "estimated_fees": 816.91732951488,
+        "net_margin": 2458.705914741116,
+        "net_margin_pct": 6.019473025994441,
+        "profitable": true,
+        "cumulative": {
+          "volume": 53673.31,
+          "volume_inr": 95998.278842784,
+          "net_profit": 6100.355400360311
+        }
+      },
+      {
+        "order_number": 5,
+        "buy_price": 1.7885664000000001,
+        "sell_price": 1.93,
+        "volume": 31894.6,
+        "volume_inr": 57045.60990144,
+        "gross_margin": 0.14143359999999983,
+        "gross_margin_pct": 7.907651625346412,
+        "estimated_fees": 1140.9121980288,
+        "net_margin": 3370.0559005311943,
+        "net_margin_pct": 5.907651625346412,
+        "profitable": true,
+        "cumulative": {
+          "volume": 85567.91,
+          "volume_inr": 153043.888744224,
+          "net_profit": 9470.411300891505
+        }
+      },
+      {
+        "order_number": 6,
+        "buy_price": 1.7885664000000001,
+        "sell_price": 1.92,
+        "volume": 36358,
+        "volume_inr": 65028.6971712,
+        "gross_margin": 0.13143359999999982,
+        "gross_margin_pct": 7.3485446221062745,
+        "estimated_fees": 1300.5739434240002,
+        "net_margin": 3478.0888853759934,
+        "net_margin_pct": 5.348544622106275,
+        "profitable": true,
+        "cumulative": {
+          "volume": 121925.91,
+          "volume_inr": 218072.58591542402,
+          "net_profit": 12948.500186267498
+        }
+      },
+      {
+        "order_number": 7,
+        "buy_price": 1.7894466,
+        "sell_price": 1.92,
+        "volume": 49470.97,
+        "volume_inr": 88525.659065202,
+        "gross_margin": 0.13055339999999993,
+        "gross_margin_pct": 7.295741599665502,
+        "estimated_fees": 1770.51318130404,
+        "net_margin": 4688.090153493957,
+        "net_margin_pct": 5.295741599665503,
+        "profitable": true,
+        "cumulative": {
+          "volume": 171396.88,
+          "volume_inr": 306598.24498062604,
+          "net_profit": 17636.590339761453
+        }
+      },
+      {
+        "order_number": 8,
+        "buy_price": 1.7894466,
+        "sell_price": 1.91,
+        "volume": 66688.8,
+        "volume_inr": 119336.04641808,
+        "gross_margin": 0.12055339999999992,
+        "gross_margin_pct": 6.736909612167244,
+        "estimated_fees": 2386.7209283616003,
+        "net_margin": 5652.8406535583945,
+        "net_margin_pct": 4.736909612167243,
+        "profitable": true,
+        "cumulative": {
+          "volume": 238085.68,
+          "volume_inr": 425934.29139870603,
+          "net_profit": 23289.430993319846
+        }
+      },
+      {
+        "order_number": 9,
+        "buy_price": 1.7894466,
+        "sell_price": 1.9,
+        "volume": 523.52,
+        "volume_inr": 936.8110840319999,
+        "gross_margin": 0.11055339999999991,
+        "gross_margin_pct": 6.178077624668985,
+        "estimated_fees": 18.73622168064,
+        "net_margin": 39.14069428735995,
+        "net_margin_pct": 4.178077624668985,
+        "profitable": true,
+        "cumulative": {
+          "volume": 238609.19999999998,
+          "volume_inr": 426871.10248273803,
+          "net_profit": 23328.571687607204
+        }
+      },
+      {
+        "order_number": 10,
+        "buy_price": 1.7894466,
+        "sell_price": 1.89,
+        "volume": 84085.9,
+        "volume_inr": 150467.22786294,
+        "gross_margin": 0.1005533999999999,
+        "gross_margin_pct": 5.619245637170726,
+        "estimated_fees": 3009.3445572588,
+        "net_margin": 5445.778579801191,
+        "net_margin_pct": 3.6192456371707262,
+        "profitable": true,
+        "cumulative": {
+          "volume": 322695.1,
+          "volume_inr": 577338.330345678,
+          "net_profit": 28774.350267408394
+        }
+      },
+      {
+        "order_number": 11,
+        "buy_price": 1.7894466,
+        "sell_price": 1.88,
+        "volume": 101483,
+        "volume_inr": 181598.4093078,
+        "gross_margin": 0.0905533999999999,
+        "gross_margin_pct": 5.060413649672468,
+        "estimated_fees": 3631.9681861560002,
+        "net_margin": 5557.662506043989,
+        "net_margin_pct": 3.0604136496724683,
+        "profitable": true,
+        "cumulative": {
+          "volume": 424178.1,
+          "volume_inr": 758936.739653478,
+          "net_profit": 34332.012773452385
+        }
+      }
+    ],
+    "max_profitable_orders": 11,
+    "total_profitable_volume": 424178.1,
+    "total_estimated_profit": 34332.012773452385,
+    "bottleneck_side": "sell",
+    "opportunity_rating": "excellent",
+    "timestamp": "2025-07-03T11:30:18.645925185+05:30"
+  }
+]
