@@ -44,16 +44,18 @@ type PairInfo struct {
 	Status         string  `json:"status"`
 }
 
-// ArbitragePairs stores pairs for the same target currency
-type ArbitragePairs struct {
+// USDTArbitragePairs stores USDT-based arbitrage opportunities
+type USDTArbitragePairs struct {
 	TargetCurrency string     `json:"target_currency"`
-	Pairs          []PairInfo `json:"pairs"`
+	USDTPair       PairInfo   `json:"usdt_pair"`   // The USDT pair to buy from
+	OtherPairs     []PairInfo `json:"other_pairs"` // Other pairs to sell to
 	LastUpdated    time.Time  `json:"last_updated"`
 }
 
 func main() {
-	fmt.Println("🔍 CoinDCX Market Data Fetcher")
-	fmt.Println("================================")
+	fmt.Println("🔍 CoinDCX USDT-Based Arbitrage Pair Fetcher")
+	fmt.Println("=============================================")
+	fmt.Println("🎯 Focus: USDT → Other Currency arbitrage opportunities")
 
 	// Fetch market details
 	fmt.Println("\n📊 Fetching market details...")
@@ -62,21 +64,20 @@ func main() {
 		fmt.Printf("❌ Error fetching markets: %v\n", err)
 		return
 	}
-
 	fmt.Printf("✅ Found %d total markets\n", len(markets))
 
-	// Extract and group pairs by target currency
-	arbitragePairs := groupPairsByTargetCurrency(markets)
+	// Extract USDT-based arbitrage pairs
+	usdtArbitragePairs := extractUSDTArbitragePairs(markets)
 
 	// Save to file
-	err = saveArbitragePairs(arbitragePairs, "arbitrage_pairs.json")
+	err = saveUSDTArbitragePairs(usdtArbitragePairs, "usdt_arbitrage_pairs.json")
 	if err != nil {
 		fmt.Printf("❌ Error saving pairs: %v\n", err)
 		return
 	}
 
-	// Display interesting pairs (currencies with multiple base pairs)
-	displayArbitrageOpportunities(arbitragePairs)
+	// Display USDT arbitrage opportunities
+	displayUSDTArbitrageOpportunities(usdtArbitragePairs)
 }
 
 func fetchMarketDetails() ([]MarketDetail, error) {
@@ -101,12 +102,12 @@ func fetchMarketDetails() ([]MarketDetail, error) {
 	if err := json.Unmarshal(body, &markets); err != nil {
 		return nil, fmt.Errorf("error parsing response: %v", err)
 	}
-
 	return markets, nil
 }
 
-func groupPairsByTargetCurrency(markets []MarketDetail) map[string]ArbitragePairs {
-	grouped := make(map[string]ArbitragePairs)
+func extractUSDTArbitragePairs(markets []MarketDetail) map[string]USDTArbitragePairs {
+	// First, group all pairs by target currency
+	allPairs := make(map[string][]PairInfo)
 
 	for _, market := range markets {
 		// Only include active markets
@@ -126,23 +127,57 @@ func groupPairsByTargetCurrency(markets []MarketDetail) map[string]ArbitragePair
 			Status:         market.Status,
 		}
 
-		if existing, exists := grouped[targetCurrency]; exists {
-			existing.Pairs = append(existing.Pairs, pairInfo)
-			existing.LastUpdated = time.Now()
-			grouped[targetCurrency] = existing
-		} else {
-			grouped[targetCurrency] = ArbitragePairs{
+		allPairs[targetCurrency] = append(allPairs[targetCurrency], pairInfo)
+	}
+
+	// Now extract only those currencies that have USDT pair + other pairs
+	usdtArbitragePairs := make(map[string]USDTArbitragePairs)
+
+	for targetCurrency, pairs := range allPairs {
+		var usdtPair *PairInfo
+		var otherPairs []PairInfo
+
+		// Find USDT pair and collect other pairs
+		for _, pair := range pairs {
+			if pair.BaseCurrency == "USDT" {
+				usdtPair = &pair
+			} else {
+				// Only include major currencies for selling
+				if isValidSellCurrency(pair.BaseCurrency) {
+					otherPairs = append(otherPairs, pair)
+				}
+			}
+		}
+
+		// Only include if we have USDT pair AND at least one other pair
+		if usdtPair != nil && len(otherPairs) > 0 {
+			usdtArbitragePairs[targetCurrency] = USDTArbitragePairs{
 				TargetCurrency: targetCurrency,
-				Pairs:          []PairInfo{pairInfo},
+				USDTPair:       *usdtPair,
+				OtherPairs:     otherPairs,
 				LastUpdated:    time.Now(),
 			}
 		}
 	}
 
-	return grouped
+	return usdtArbitragePairs
 }
 
-func saveArbitragePairs(pairs map[string]ArbitragePairs, filename string) error {
+// isValidSellCurrency checks if the currency is suitable for selling in arbitrage
+func isValidSellCurrency(currency string) bool {
+	validCurrencies := map[string]bool{
+		"INR":  true,
+		"BTC":  true,
+		"ETH":  true,
+		"BNB":  true,
+		"BUSD": true,
+		"USDC": true,
+		// Add more as needed
+	}
+	return validCurrencies[currency]
+}
+
+func saveUSDTArbitragePairs(pairs map[string]USDTArbitragePairs, filename string) error {
 	data, err := json.MarshalIndent(pairs, "", "  ")
 	if err != nil {
 		return fmt.Errorf("error marshaling data: %v", err)
@@ -153,42 +188,46 @@ func saveArbitragePairs(pairs map[string]ArbitragePairs, filename string) error 
 		return fmt.Errorf("error writing file: %v", err)
 	}
 
-	fmt.Printf("💾 Saved arbitrage pairs to %s\n", filename)
+	fmt.Printf("💾 Saved USDT arbitrage pairs to %s\n", filename)
 	return nil
 }
 
-func displayArbitrageOpportunities(pairs map[string]ArbitragePairs) {
-	fmt.Println("\n🎯 Potential Arbitrage Opportunities:")
-	fmt.Println("=====================================")
+func displayUSDTArbitrageOpportunities(pairs map[string]USDTArbitragePairs) {
+	fmt.Println("\n🎯 USDT-Based Arbitrage Opportunities:")
+	fmt.Println("======================================")
+	fmt.Println("💡 Strategy: Buy with USDT → Sell for other currencies")
 
-	// Find currencies with multiple trading pairs
+	if len(pairs) == 0 {
+		fmt.Println("❌ No USDT-based arbitrage opportunities found")
+		return
+	}
+
 	opportunities := 0
 	for currency, data := range pairs {
-		if len(data.Pairs) > 1 {
-			opportunities++
-			fmt.Printf("\n💰 %s (%d pairs):\n", currency, len(data.Pairs))
+		opportunities++
+		fmt.Printf("\n💰 %s (%d sell options):\n", currency, len(data.OtherPairs))
+		fmt.Printf("   🟢 BUY:  %s (USDT pair)\n", data.USDTPair.Symbol)
+		fmt.Printf("   🔴 SELL OPTIONS:\n")
 
-			for _, pair := range data.Pairs {
-				fmt.Printf("   📊 %s (%s) - Min: %.8f, Notional: %.8f\n",
-					pair.Symbol, pair.BaseCurrency, pair.MinQuantity, pair.MinNotional)
-			}
+		for _, pair := range data.OtherPairs {
+			fmt.Printf("      📊 %s (%s) - Min: %.8f, Notional: %.8f\n",
+				pair.Symbol, pair.BaseCurrency, pair.MinQuantity, pair.MinNotional)
 		}
 	}
 
-	if opportunities == 0 {
-		fmt.Println("❌ No arbitrage opportunities found (no currencies with multiple base pairs)")
-	} else {
-		fmt.Printf("\n✅ Found %d currencies with arbitrage potential!\n", opportunities)
+	fmt.Printf("\n✅ Found %d currencies with USDT arbitrage potential!\n", opportunities)
+	fmt.Printf("📈 Total USDT-based opportunities: %d\n", len(pairs))
 
-		// Special highlight for RENDER
-		if renderData, exists := pairs["RENDER"]; exists {
-			fmt.Printf("\n🔥 RENDER Analysis:\n")
-			for _, pair := range renderData.Pairs {
-				fmt.Printf("   %s: Min Qty: %.8f, Min Notional: %.8f\n",
-					pair.Symbol, pair.MinQuantity, pair.MinNotional)
-			}
+	// Show summary by sell currency
+	sellCurrencyCount := make(map[string]int)
+	for _, data := range pairs {
+		for _, pair := range data.OtherPairs {
+			sellCurrencyCount[pair.BaseCurrency]++
 		}
 	}
 
-	fmt.Printf("\n📈 Total currencies tracked: %d\n", len(pairs))
+	fmt.Printf("\n📊 Sell Currency Distribution:\n")
+	for currency, count := range sellCurrencyCount {
+		fmt.Printf("   %s: %d opportunities\n", currency, count)
+	}
 }

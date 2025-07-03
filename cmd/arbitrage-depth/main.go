@@ -139,7 +139,7 @@ func main() {
 	fmt.Println("🔍 Deep diving into arbitrage opportunities...")
 
 	// Load viable opportunities from previous analysis
-	viableOpportunities, err := loadViableOpportunities("arbitrage_opportunities.json")
+	viableOpportunities, err := loadViableOpportunities("usdt_arbitrage_opportunities.json")
 	if err != nil {
 		log.Fatalf("❌ Error loading opportunities: %v\nRun arbitrage detector first!", err)
 	}

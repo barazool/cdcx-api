@@ -1,0 +1,78 @@
+[
+  {
+    "target_currency": "VET",
+    "buy_market_usdt": {
+      "symbol": "VETUSDT",
+      "pair": "KC-VET_USDT",
+      "best_bid": 0.02031,
+      "best_ask": 0.02032,
+      "bid_volume": 210536.7,
+      "ask_volume": 36358,
+      "spread": 0.000009999999999999593,
+      "spread_pct": 0.04921259842519484,
+      "has_liquidity": true
+    },
+    "sell_market_other": {
+      "symbol": "VETINR",
+      "pair": "I-VET_INR",
+      "best_bid": 1.95,
+      "best_ask": 1.978,
+      "bid_volume": 14576.4,
+      "ask_volume": 9213.32,
+      "spread": 0.028000000000000025,
+      "spread_pct": 1.4155712841253805,
+      "has_liquidity": true
+    },
+    "buy_price_usdt": 0.02032,
+    "sell_price_other": 1.95,
+    "buy_price_inr": 1.790192,
+    "sell_price_inr": 1.95,
+    "sell_currency": "INR",
+    "gross_margin": 0.15980799999999995,
+    "gross_margin_pct": 8.926863710708123,
+    "estimated_fees": 0.07480384,
+    "net_margin": 0.08500415999999995,
+    "net_margin_pct": 4.748326436493961,
+    "viable": true,
+    "trade_flow": "USDT → Buy VET → Sell to INR → Profit",
+    "timestamp": "2025-07-03T12:48:35.044106072+05:30"
+  },
+  {
+    "target_currency": "VET",
+    "buy_market_usdt": {
+      "symbol": "VETUSDT",
+      "pair": "KC-VET_USDT",
+      "best_bid": 0.02031,
+      "best_ask": 0.02032,
+      "bid_volume": 210536.7,
+      "ask_volume": 36358,
+      "spread": 0.000009999999999999593,
+      "spread_pct": 0.04921259842519484,
+      "has_liquidity": true
+    },
+    "sell_market_other": {
+      "symbol": "VETETH",
+      "pair": "KC-VET_ETH",
+      "best_bid": 0.00000839,
+      "best_ask": 0.00000842,
+      "bid_volume": 4050,
+      "ask_volume": 5882,
+      "spread": 3.000000000000141e-8,
+      "spread_pct": 0.3562945368171188,
+      "has_liquidity": true
+    },
+    "buy_price_usdt": 0.02032,
+    "sell_price_other": 0.00000839,
+    "buy_price_inr": 1.790192,
+    "sell_price_inr": 1.9120818389999998,
+    "sell_currency": "ETH",
+    "gross_margin": 0.12188983899999983,
+    "gross_margin_pct": 6.8087578874221215,
+    "estimated_fees": 0.07404547678000001,
+    "net_margin": 0.047844362219999825,
+    "net_margin_pct": 2.672582729673679,
+    "viable": true,
+    "trade_flow": "USDT → Buy VET → Sell to ETH → Profit",
+    "timestamp": "2025-07-03T12:48:34.995011147+05:30"
+  }
+]

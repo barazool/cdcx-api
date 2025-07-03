@@ -3,8 +3,8 @@
     "BTC_INR": {
       "from_currency": "BTC",
       "to_currency": "INR",
-      "rate": 9649000,
-      "timestamp": "2025-07-03T11:30:18.301081139+05:30",
+      "rate": 9700000,
+      "timestamp": "2025-07-03T15:43:57.529143084+05:30",
       "source": "ticker"
     },
     "DAI_INR": {
@@ -17,8 +17,8 @@
     "ETH_INR": {
       "from_currency": "ETH",
       "to_currency": "INR",
-      "rate": 227545.1,
-      "timestamp": "2025-07-03T11:30:18.521569429+05:30",
+      "rate": 228439.5,
+      "timestamp": "2025-07-03T15:43:57.630303598+05:30",
       "source": "ticker"
     },
     "TRX_INR": {
@@ -31,17 +31,17 @@
     "USDC_INR": {
       "from_currency": "USDC",
       "to_currency": "INR",
-      "rate": 88.028,
-      "timestamp": "2025-07-03T11:10:21.878379189+05:30",
+      "rate": 87.889,
+      "timestamp": "2025-07-03T12:48:12.752467425+05:30",
       "source": "ticker"
     },
     "USDT_INR": {
       "from_currency": "USDT",
       "to_currency": "INR",
-      "rate": 88.02,
-      "timestamp": "2025-07-03T11:30:18.038562578+05:30",
+      "rate": 88.03,
+      "timestamp": "2025-07-03T15:43:57.401288393+05:30",
       "source": "ticker"
     }
   },
-  "last_updated": "2025-07-03T11:30:20.351140649+05:30"
+  "last_updated": "2025-07-03T15:47:54.761402226+05:30"
 }

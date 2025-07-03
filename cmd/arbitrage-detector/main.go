@@ -6,11 +6,12 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"sort"
 	"strconv"
 	"time"
 )
 
-// Existing structures from market fetcher
+// PairInfo stores essential pair information for arbitrage
 type PairInfo struct {
 	Symbol         string  `json:"symbol"`
 	Pair           string  `json:"pair"`
@@ -21,13 +22,15 @@ type PairInfo struct {
 	Status         string  `json:"status"`
 }
 
-type ArbitragePairs struct {
+// USDTArbitragePairs stores USDT-based arbitrage opportunities
+type USDTArbitragePairs struct {
 	TargetCurrency string     `json:"target_currency"`
-	Pairs          []PairInfo `json:"pairs"`
+	USDTPair       PairInfo   `json:"usdt_pair"`   // The USDT pair to buy from
+	OtherPairs     []PairInfo `json:"other_pairs"` // Other pairs to sell to
 	LastUpdated    time.Time  `json:"last_updated"`
 }
 
-// New structures for orderbook and rates
+// Structures for orderbook and rates
 type OrderBookResponse struct {
 	Bids map[string]string `json:"bids"`
 	Asks map[string]string `json:"asks"`
@@ -38,7 +41,7 @@ type ExchangeRate struct {
 	ToCurrency   string    `json:"to_currency"`
 	Rate         float64   `json:"rate"`
 	Timestamp    time.Time `json:"timestamp"`
-	Source       string    `json:"source"` // ticker, orderbook
+	Source       string    `json:"source"`
 }
 
 type ExchangeRateCache struct {
@@ -58,19 +61,23 @@ type MarketLiquidity struct {
 	HasLiquidity bool    `json:"has_liquidity"`
 }
 
-type ArbitrageOpportunity struct {
-	TargetCurrency string          `json:"target_currency"`
-	BuyMarket      MarketLiquidity `json:"buy_market"`
-	SellMarket     MarketLiquidity `json:"sell_market"`
-	BuyPriceINR    float64         `json:"buy_price_inr"`
-	SellPriceINR   float64         `json:"sell_price_inr"`
-	GrossMargin    float64         `json:"gross_margin"`
-	GrossMarginPct float64         `json:"gross_margin_pct"`
-	EstimatedFees  float64         `json:"estimated_fees"`
-	NetMargin      float64         `json:"net_margin"`
-	NetMarginPct   float64         `json:"net_margin_pct"`
-	Viable         bool            `json:"viable"`
-	Timestamp      time.Time       `json:"timestamp"`
+type USDTArbitrageOpportunity struct {
+	TargetCurrency  string          `json:"target_currency"`
+	BuyMarketUSDT   MarketLiquidity `json:"buy_market_usdt"`   // Always USDT pair
+	SellMarketOther MarketLiquidity `json:"sell_market_other"` // Other currency pair
+	BuyPriceUSDT    float64         `json:"buy_price_usdt"`    // Price in USDT
+	SellPriceOther  float64         `json:"sell_price_other"`  // Price in other currency
+	BuyPriceINR     float64         `json:"buy_price_inr"`     // USDT price converted to INR
+	SellPriceINR    float64         `json:"sell_price_inr"`    // Other currency price converted to INR
+	SellCurrency    string          `json:"sell_currency"`     // Currency we're selling to (BTC, ETH, etc.)
+	GrossMargin     float64         `json:"gross_margin"`      // Gross margin in INR
+	GrossMarginPct  float64         `json:"gross_margin_pct"`  // Gross margin percentage
+	EstimatedFees   float64         `json:"estimated_fees"`    // Estimated fees in INR
+	NetMargin       float64         `json:"net_margin"`        // Net margin in INR
+	NetMarginPct    float64         `json:"net_margin_pct"`    // Net margin percentage
+	Viable          bool            `json:"viable"`            // Is this opportunity viable?
+	TradeFlow       string          `json:"trade_flow"`        // Description of trade flow
+	Timestamp       time.Time       `json:"timestamp"`
 }
 
 const (
@@ -81,78 +88,93 @@ const (
 )
 
 func main() {
-	fmt.Println("🚀 CoinDCX Arbitrage Detector")
-	fmt.Println("=============================")
+	fmt.Println("🚀 CoinDCX USDT-Based Arbitrage Detector")
+	fmt.Println("========================================")
+	fmt.Println("💡 Strategy: USDT → Buy Coin → Sell for Other Currency → Profit in INR")
 
-	// Load saved pairs
-	pairs, err := loadArbitragePairs("arbitrage_pairs.json")
+	// Load USDT arbitrage pairs
+	pairs, err := loadUSDTArbitragePairs("usdt_arbitrage_pairs.json")
 	if err != nil {
 		fmt.Printf("❌ Error loading pairs: %v\n", err)
-		fmt.Println("💡 Run the market fetcher first to generate arbitrage_pairs.json")
+		fmt.Println("💡 Run the USDT pair fetcher first to generate usdt_arbitrage_pairs.json")
 		return
 	}
 
 	// Load exchange rate cache
 	rateCache := loadExchangeRateCache()
 
-	// Find viable arbitrage opportunities
-	opportunities := []ArbitrageOpportunity{}
-	totalPairs := 0
-	checkedPairs := 0
+	// Find viable USDT arbitrage opportunities
+	opportunities := []USDTArbitrageOpportunity{}
+	totalCurrencies := 0
+	checkedCurrencies := 0
 
-	fmt.Printf("📊 Analyzing %d currencies for arbitrage opportunities...\n", len(pairs))
+	fmt.Printf("📊 Analyzing %d currencies for USDT-based arbitrage opportunities...\n", len(pairs))
 
 	for currency, data := range pairs {
-		if len(data.Pairs) < 2 {
-			continue // Skip currencies with only one pair
-		}
+		totalCurrencies++
+		fmt.Printf("\n🔍 Analyzing %s (USDT → %d other currencies)...\n", currency, len(data.OtherPairs))
 
-		totalPairs++
-		fmt.Printf("\n🔍 Analyzing %s (%d pairs)...\n", currency, len(data.Pairs))
-
-		// Get liquidity data for all pairs of this currency
-		liquidityData := []MarketLiquidity{}
-		for _, pair := range data.Pairs {
-			liquidity, err := getMarketLiquidity(pair)
-			if err != nil {
-				fmt.Printf("   ⚠️  %s: %v\n", pair.Symbol, err)
-				continue
-			}
-
-			// Convert price to INR
-			priceINR, err := convertToINR(liquidity.BestAsk, pair.BaseCurrency, &rateCache)
-			if err != nil {
-				fmt.Printf("   ⚠️  %s: Error converting to INR: %v\n", pair.Symbol, err)
-				continue
-			}
-
-			// Check if market has sufficient liquidity
-			liquidityValueINR := liquidity.AskVolume * priceINR
-			if liquidityValueINR < MIN_LIQUIDITY {
-				fmt.Printf("   📉 %s: Low liquidity (₹%.2f)\n", pair.Symbol, liquidityValueINR)
-				continue
-			}
-
-			liquidityData = append(liquidityData, liquidity)
-			fmt.Printf("   ✅ %s: Bid ₹%.2f, Ask ₹%.2f, Spread %.2f%%\n",
-				pair.Symbol, liquidity.BestBid, priceINR, liquidity.SpreadPct)
-		}
-
-		if len(liquidityData) < 2 {
-			fmt.Printf("   ❌ %s: Insufficient liquid markets\n", currency)
+		// Get liquidity for USDT pair (buy side)
+		usdtLiquidity, err := getMarketLiquidity(data.USDTPair)
+		if err != nil {
+			fmt.Printf("   ⚠️  USDT pair %s: %v\n", data.USDTPair.Symbol, err)
 			continue
 		}
 
-		checkedPairs++
+		// Check USDT pair liquidity
+		usdtPriceINR, err := convertToINR(usdtLiquidity.BestAsk, "USDT", &rateCache)
+		if err != nil {
+			fmt.Printf("   ⚠️  %s: Error converting USDT to INR: %v\n", data.USDTPair.Symbol, err)
+			continue
+		}
 
-		// Find arbitrage opportunities between pairs
-		for i := 0; i < len(liquidityData); i++ {
-			for j := i + 1; j < len(liquidityData); j++ {
-				opportunity := calculateArbitrage(currency, liquidityData[i], liquidityData[j], data.Pairs, &rateCache)
-				if opportunity.Viable {
-					opportunities = append(opportunities, opportunity)
-				}
+		usdtLiquidityValueINR := usdtLiquidity.AskVolume * usdtPriceINR
+		if usdtLiquidityValueINR < MIN_LIQUIDITY {
+			fmt.Printf("   📉 %s: Low USDT liquidity (₹%.2f)\n", data.USDTPair.Symbol, usdtLiquidityValueINR)
+			continue
+		}
+
+		fmt.Printf("   ✅ USDT BUY: %s at ₹%.4f (liquidity: ₹%.2f)\n",
+			data.USDTPair.Symbol, usdtPriceINR, usdtLiquidityValueINR)
+
+		hasViableOpportunity := false
+
+		// Check each sell option
+		for _, sellPair := range data.OtherPairs {
+			sellLiquidity, err := getMarketLiquidity(sellPair)
+			if err != nil {
+				fmt.Printf("      ⚠️  %s: %v\n", sellPair.Symbol, err)
+				continue
 			}
+
+			// Check sell pair liquidity
+			sellPriceINR, err := convertToINR(sellLiquidity.BestBid, sellPair.BaseCurrency, &rateCache)
+			if err != nil {
+				fmt.Printf("      ⚠️  %s: Error converting %s to INR: %v\n", sellPair.Symbol, sellPair.BaseCurrency, err)
+				continue
+			}
+
+			sellLiquidityValueINR := sellLiquidity.BidVolume * sellPriceINR
+			if sellLiquidityValueINR < MIN_LIQUIDITY {
+				fmt.Printf("      📉 %s: Low %s liquidity (₹%.2f)\n", sellPair.Symbol, sellPair.BaseCurrency, sellLiquidityValueINR)
+				continue
+			}
+
+			// Calculate arbitrage opportunity
+			opportunity := calculateUSDTArbitrage(currency, usdtLiquidity, sellLiquidity, data, sellPair, &rateCache)
+			if opportunity.Viable {
+				opportunities = append(opportunities, opportunity)
+				hasViableOpportunity = true
+				fmt.Printf("      🎯 VIABLE: %s → %s (%.2f%% net margin)\n",
+					opportunity.BuyMarketUSDT.Symbol, opportunity.SellMarketOther.Symbol, opportunity.NetMarginPct)
+			} else {
+				fmt.Printf("      ❌ %s → %s: %.2f%% margin (below %.1f%% threshold)\n",
+					usdtLiquidity.Symbol, sellLiquidity.Symbol, opportunity.NetMarginPct, MIN_NET_MARGIN)
+			}
+		}
+
+		if hasViableOpportunity {
+			checkedCurrencies++
 		}
 	}
 
@@ -160,19 +182,19 @@ func main() {
 	saveExchangeRateCache(rateCache)
 
 	// Display results
-	displayResults(opportunities, totalPairs, checkedPairs)
+	displayUSDTResults(opportunities, totalCurrencies, checkedCurrencies)
 
 	// Save opportunities to file
-	saveOpportunities(opportunities, "arbitrage_opportunities.json")
+	saveUSDTOpportunities(opportunities, "usdt_arbitrage_opportunities.json")
 }
 
-func loadArbitragePairs(filename string) (map[string]ArbitragePairs, error) {
+func loadUSDTArbitragePairs(filename string) (map[string]USDTArbitragePairs, error) {
 	data, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
 
-	var pairs map[string]ArbitragePairs
+	var pairs map[string]USDTArbitragePairs
 	err = json.Unmarshal(data, &pairs)
 	return pairs, err
 }
@@ -203,7 +225,6 @@ func saveExchangeRateCache(cache ExchangeRateCache) {
 func getMarketLiquidity(pair PairInfo) (MarketLiquidity, error) {
 	url := fmt.Sprintf("https://public.coindcx.com/market_data/orderbook?pair=%s", pair.Pair)
 
-	// client := &http.Client{Timeout: 10 * time.Second}
 	resp, err := http.Get(url)
 	if err != nil {
 		return MarketLiquidity{}, err
@@ -289,11 +310,9 @@ func convertToINR(price float64, fromCurrency string, cache *ExchangeRateCache) 
 }
 
 func fetchExchangeRate(fromCurrency, toCurrency string) (ExchangeRate, error) {
-	// Try to get rate from CoinDCX ticker
 	pair := fmt.Sprintf("%s%s", fromCurrency, toCurrency)
 	url := "https://api.coindcx.com/exchange/ticker"
 
-	// client := &http.Client{Timeout: 10 * time.Second}
 	resp, err := http.Get(url)
 	if err != nil {
 		return ExchangeRate{}, err
@@ -310,7 +329,6 @@ func fetchExchangeRate(fromCurrency, toCurrency string) (ExchangeRate, error) {
 		return ExchangeRate{}, err
 	}
 
-	// Find the ticker for our pair
 	for _, ticker := range tickers {
 		if market, ok := ticker["market"].(string); ok && market == pair {
 			if lastPriceStr, ok := ticker["last_price"].(string); ok {
@@ -331,103 +349,144 @@ func fetchExchangeRate(fromCurrency, toCurrency string) (ExchangeRate, error) {
 	return ExchangeRate{}, fmt.Errorf("exchange rate not found for %s/%s", fromCurrency, toCurrency)
 }
 
-func calculateArbitrage(currency string, market1, market2 MarketLiquidity, pairs []PairInfo, cache *ExchangeRateCache) ArbitrageOpportunity {
-	// Convert both prices to INR
-	var price1INR, price2INR float64
-	var err error
+func calculateUSDTArbitrage(currency string, usdtLiquidity, sellLiquidity MarketLiquidity,
+	data USDTArbitragePairs, sellPair PairInfo, cache *ExchangeRateCache) USDTArbitrageOpportunity {
 
-	// Find the base currencies for each market
-	var base1, base2 string
-	for _, pair := range pairs {
-		if pair.Symbol == market1.Symbol {
-			base1 = pair.BaseCurrency
-		}
-		if pair.Symbol == market2.Symbol {
-			base2 = pair.BaseCurrency
-		}
-	}
-
-	price1INR, err = convertToINR(market1.BestAsk, base1, cache)
+	// Convert prices to INR for comparison
+	buyPriceINR, err := convertToINR(usdtLiquidity.BestAsk, "USDT", cache)
 	if err != nil {
-		return ArbitrageOpportunity{}
+		return USDTArbitrageOpportunity{}
 	}
 
-	price2INR, err = convertToINR(market2.BestAsk, base2, cache)
+	sellPriceINR, err := convertToINR(sellLiquidity.BestBid, sellPair.BaseCurrency, cache)
 	if err != nil {
-		return ArbitrageOpportunity{}
+		return USDTArbitrageOpportunity{}
 	}
 
-	// Determine buy and sell markets
-	var buyMarket, sellMarket MarketLiquidity
-	var buyPriceINR, sellPriceINR float64
-
-	if price1INR < price2INR {
-		buyMarket = market1
-		sellMarket = market2
-		buyPriceINR = price1INR
-		sellPriceINR = price2INR
-	} else {
-		buyMarket = market2
-		sellMarket = market1
-		buyPriceINR = price2INR
-		sellPriceINR = price1INR
-	}
-
-	// Calculate margins
+	// Calculate margins in INR terms
 	grossMargin := sellPriceINR - buyPriceINR
 	grossMarginPct := (grossMargin / buyPriceINR) * 100
 
-	// Estimate fees (using 2% conservative estimate)
+	// Estimate fees (2% for both buy and sell transactions)
 	estimatedFees := (buyPriceINR + sellPriceINR) * 0.02
 
 	// Calculate net margins
 	netMargin := grossMargin - estimatedFees
 	netMarginPct := (netMargin / buyPriceINR) * 100
 
-	return ArbitrageOpportunity{
-		TargetCurrency: currency,
-		BuyMarket:      buyMarket,
-		SellMarket:     sellMarket,
-		BuyPriceINR:    buyPriceINR,
-		SellPriceINR:   sellPriceINR,
-		GrossMargin:    grossMargin,
-		GrossMarginPct: grossMarginPct,
-		EstimatedFees:  estimatedFees,
-		NetMargin:      netMargin,
-		NetMarginPct:   netMarginPct,
-		Viable:         netMarginPct >= MIN_NET_MARGIN,
-		Timestamp:      time.Now(),
+	tradeFlow := fmt.Sprintf("USDT → Buy %s → Sell to %s → Profit", currency, sellPair.BaseCurrency)
+
+	return USDTArbitrageOpportunity{
+		TargetCurrency:  currency,
+		BuyMarketUSDT:   usdtLiquidity,
+		SellMarketOther: sellLiquidity,
+		BuyPriceUSDT:    usdtLiquidity.BestAsk,
+		SellPriceOther:  sellLiquidity.BestBid,
+		BuyPriceINR:     buyPriceINR,
+		SellPriceINR:    sellPriceINR,
+		SellCurrency:    sellPair.BaseCurrency,
+		GrossMargin:     grossMargin,
+		GrossMarginPct:  grossMarginPct,
+		EstimatedFees:   estimatedFees,
+		NetMargin:       netMargin,
+		NetMarginPct:    netMarginPct,
+		Viable:          netMarginPct >= MIN_NET_MARGIN,
+		TradeFlow:       tradeFlow,
+		Timestamp:       time.Now(),
 	}
 }
 
-func displayResults(opportunities []ArbitrageOpportunity, totalPairs, checkedPairs int) {
-	fmt.Printf("\n🎯 ARBITRAGE ANALYSIS RESULTS\n")
-	fmt.Printf("============================\n")
-	fmt.Printf("📊 Total currencies with multiple pairs: %d\n", totalPairs)
-	fmt.Printf("✅ Currencies with sufficient liquidity: %d\n", checkedPairs)
-	fmt.Printf("💰 Viable arbitrage opportunities: %d\n", len(opportunities))
+func displayUSDTResults(opportunities []USDTArbitrageOpportunity, totalCurrencies, checkedCurrencies int) {
+	fmt.Printf("\n🎯 USDT-BASED ARBITRAGE ANALYSIS RESULTS\n")
+	fmt.Printf("=======================================\n")
+	fmt.Printf("📊 Total currencies analyzed: %d\n", totalCurrencies)
+	fmt.Printf("✅ Currencies with viable opportunities: %d\n", checkedCurrencies)
+	fmt.Printf("💰 Total viable arbitrage opportunities: %d\n", len(opportunities))
 
 	if len(opportunities) == 0 {
-		fmt.Printf("\n❌ No viable arbitrage opportunities found with 2%+ net margin\n")
+		fmt.Printf("\n❌ No viable USDT arbitrage opportunities found with 2%+ net margin\n")
 		return
 	}
 
-	fmt.Printf("\n🔥 VIABLE OPPORTUNITIES:\n")
-	fmt.Printf("========================\n")
+	// Sort opportunities by net margin percentage (highest first)
+	sort.Slice(opportunities, func(i, j int) bool {
+		return opportunities[i].NetMarginPct > opportunities[j].NetMarginPct
+	})
 
-	for i, opp := range opportunities {
+	fmt.Printf("\n🔥 VIABLE USDT ARBITRAGE OPPORTUNITIES:\n")
+	fmt.Printf("=====================================\n")
+
+	// Group by target currency for better display
+	currencyOpps := make(map[string][]USDTArbitrageOpportunity)
+	for _, opp := range opportunities {
 		if opp.Viable {
-			fmt.Printf("\n%d. 💎 %s\n", i+1, opp.TargetCurrency)
-			fmt.Printf("   🟢 BUY:  %s at ₹%.4f\n", opp.BuyMarket.Symbol, opp.BuyPriceINR)
-			fmt.Printf("   🔴 SELL: %s at ₹%.4f\n", opp.SellMarket.Symbol, opp.SellPriceINR)
-			fmt.Printf("   💵 Gross Margin: ₹%.4f (%.2f%%)\n", opp.GrossMargin, opp.GrossMarginPct)
-			fmt.Printf("   💸 Est. Fees: ₹%.4f (2%% buffer)\n", opp.EstimatedFees)
-			fmt.Printf("   💰 Net Margin: ₹%.4f (%.2f%%)\n", opp.NetMargin, opp.NetMarginPct)
+			currencyOpps[opp.TargetCurrency] = append(currencyOpps[opp.TargetCurrency], opp)
 		}
+	}
+
+	oppNum := 1
+	for currency, opps := range currencyOpps {
+		fmt.Printf("\n💎 %s (%d opportunities):\n", currency, len(opps))
+
+		// Sort this currency's opportunities by margin
+		sort.Slice(opps, func(i, j int) bool {
+			return opps[i].NetMarginPct > opps[j].NetMarginPct
+		})
+
+		for _, opp := range opps {
+			fmt.Printf("   %d. %s\n", oppNum, opp.TradeFlow)
+			fmt.Printf("      🟢 BUY:  %s at ₹%.4f (USDT: %.6f)\n",
+				opp.BuyMarketUSDT.Symbol, opp.BuyPriceINR, opp.BuyPriceUSDT)
+			fmt.Printf("      🔴 SELL: %s at ₹%.4f (%s: %.6f)\n",
+				opp.SellMarketOther.Symbol, opp.SellPriceINR, opp.SellCurrency, opp.SellPriceOther)
+			fmt.Printf("      💵 Gross Margin: ₹%.4f (%.2f%%)\n", opp.GrossMargin, opp.GrossMarginPct)
+			fmt.Printf("      💸 Est. Fees: ₹%.4f (2%% buffer)\n", opp.EstimatedFees)
+			fmt.Printf("      💰 Net Margin: ₹%.4f (%.2f%%)\n", opp.NetMargin, opp.NetMarginPct)
+			fmt.Printf("      📊 Rating: %s\n", getRatingEmoji(opp.NetMarginPct))
+			oppNum++
+		}
+	}
+
+	// Display summary statistics
+	fmt.Printf("\n📈 SUMMARY STATISTICS:\n")
+	fmt.Printf("=====================\n")
+
+	totalOpportunities := len(opportunities)
+	bestMargin := opportunities[0].NetMarginPct
+	avgMargin := 0.0
+	for _, opp := range opportunities {
+		avgMargin += opp.NetMarginPct
+	}
+	avgMargin /= float64(totalOpportunities)
+
+	fmt.Printf("📊 Best Opportunity: %.2f%% net margin (%s)\n", bestMargin, opportunities[0].TargetCurrency)
+	fmt.Printf("📊 Average Margin: %.2f%%\n", avgMargin)
+
+	// Count by sell currency
+	sellCurrencyCount := make(map[string]int)
+	for _, opp := range opportunities {
+		sellCurrencyCount[opp.SellCurrency]++
+	}
+
+	fmt.Printf("📊 Opportunities by Sell Currency:\n")
+	for currency, count := range sellCurrencyCount {
+		fmt.Printf("   %s: %d opportunities\n", currency, count)
 	}
 }
 
-func saveOpportunities(opportunities []ArbitrageOpportunity, filename string) error {
+func getRatingEmoji(netMarginPct float64) string {
+	if netMarginPct >= 5.0 {
+		return "🔥 EXCELLENT"
+	} else if netMarginPct >= 3.5 {
+		return "⭐ VERY GOOD"
+	} else if netMarginPct >= 2.5 {
+		return "✅ GOOD"
+	} else {
+		return "⚠️  MARGINAL"
+	}
+}
+
+func saveUSDTOpportunities(opportunities []USDTArbitrageOpportunity, filename string) error {
 	data, err := json.MarshalIndent(opportunities, "", "  ")
 	if err != nil {
 		return err
@@ -438,6 +497,6 @@ func saveOpportunities(opportunities []ArbitrageOpportunity, filename string) er
 		return err
 	}
 
-	fmt.Printf("\n💾 Saved %d opportunities to %s\n", len(opportunities), filename)
+	fmt.Printf("\n💾 Saved %d USDT arbitrage opportunities to %s\n", len(opportunities), filename)
 	return nil
 }
