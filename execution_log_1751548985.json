@@ -1,0 +1,43 @@
+{
+  "currency": "",
+  "buy_market": "",
+  "sell_market": "",
+  "start_time": "2025-07-03T18:53:05.846823952+05:30",
+  "end_time": "2025-07-03T18:53:12.88734724+05:30",
+  "total_profit": 0,
+  "total_volume": 0,
+  "total_investment": 0,
+  "orders": [
+    {
+      "order_number": 1,
+      "currency": "VET",
+      "buy_market": "VETUSDT",
+      "sell_market": "VETETH",
+      "buy_order_id": "dabddf3c-5810-11f0-b4c4-37cd7df9f1ac",
+      "sell_order_id": "dc8d6b8e-5810-11f0-974e-3babb22b7965",
+      "planned_volume": 4050,
+      "volume_executed": 4050,
+      "buy_price": 0.02209962592592,
+      "sell_price": 0.02209,
+      "expected_profit": 387.3986513999988,
+      "actual_profit": -0.3969209699760088,
+      "actual_margin_pct": -0.4434698492199663,
+      "success": true,
+      "start_time": "2025-07-03T18:53:05.846857107+05:30",
+      "end_time": "2025-07-03T18:53:10.386467918+05:30",
+      "execution_time_ms": 4539
+    }
+  ],
+  "successful": false,
+  "timestamp": "2025-07-03T18:53:05.846824266+05:30",
+  "config": {
+    "max_position_usdt": 100,
+    "min_required_usdt": 10,
+    "stop_loss_pct": 3,
+    "order_timeout_seconds": 30,
+    "delay_between_orders": 2000,
+    "use_market_orders": true,
+    "max_orders_per_run": 5,
+    "risk_tolerance_level": "conservative"
+  }
+}

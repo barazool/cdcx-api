@@ -1,0 +1,44 @@
+{
+  "currency": "VET",
+  "buy_market": "VETUSDT",
+  "sell_market": "VETETH",
+  "start_time": "2025-07-03T17:58:41.568861864+05:30",
+  "end_time": "2025-07-03T17:58:51.399835988+05:30",
+  "total_profit": 0,
+  "total_volume": 0,
+  "total_investment": 0,
+  "orders": [
+    {
+      "order_number": 1,
+      "currency": "VET",
+      "buy_market": "VETUSDT",
+      "sell_market": "VETETH",
+      "buy_order_id": "",
+      "sell_order_id": "",
+      "planned_volume": 4050,
+      "volume_executed": 0,
+      "buy_price": 0,
+      "sell_price": 0,
+      "expected_profit": 387.3986513999988,
+      "actual_profit": 0,
+      "actual_margin_pct": 0,
+      "success": false,
+      "error_message": "buy order failed: error parsing order response: json: cannot unmarshal number into Go struct field Order.orders.created_at of type string",
+      "start_time": "2025-07-03T17:58:41.568923611+05:30",
+      "end_time": "0001-01-01T00:00:00Z",
+      "execution_time_ms": 0
+    }
+  ],
+  "successful": false,
+  "timestamp": "2025-07-03T17:58:41.568861938+05:30",
+  "config": {
+    "max_position_usdt": 100,
+    "min_required_usdt": 10,
+    "stop_loss_pct": 3,
+    "order_timeout_seconds": 30,
+    "delay_between_orders": 2000,
+    "use_market_orders": true,
+    "max_orders_per_run": 5,
+    "risk_tolerance_level": "conservative"
+  }
+}
