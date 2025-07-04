@@ -2,7 +2,7 @@ package types
 
 import "time"
 
-// Market and Pair Types (from your existing code)
+// Market and Pair Types
 type MarketDetail struct {
 	CoinDCXName             string   `json:"coindcx_name"`
 	BaseCurrencyShortName   string   `json:"base_currency_short_name"`
@@ -42,7 +42,7 @@ type ArbitragePairs struct {
 	LastUpdated    time.Time  `json:"last_updated"`
 }
 
-// Exchange Rate Types (from your existing code)
+// Exchange Rate Types
 type ExchangeRate struct {
 	FromCurrency string    `json:"from_currency"`
 	ToCurrency   string    `json:"to_currency"`
@@ -56,7 +56,7 @@ type ExchangeRateCache struct {
 	LastUpdated time.Time               `json:"last_updated"`
 }
 
-// Order Book Types (from your existing code)
+// Order Book Types
 type OrderBookLevel struct {
 	Price      float64 `json:"price"`
 	Volume     float64 `json:"volume"`
@@ -82,7 +82,7 @@ type EnhancedOrderBook struct {
 	Timestamp      time.Time        `json:"timestamp"`
 }
 
-// Arbitrage Opportunity Types (from your existing code)
+// Arbitrage Opportunity Types
 type ArbitrageOpportunity struct {
 	TargetCurrency string `json:"target_currency"`
 	BuyMarket      struct {
@@ -106,7 +106,20 @@ type ArbitrageOpportunity struct {
 	Timestamp      time.Time `json:"timestamp"`
 }
 
-// Depth Analysis Types (from your existing code)
+// Quick Depth Analysis Types (for real-time processing)
+type OrderLevel struct {
+	Price  float64 `json:"price"`
+	Volume float64 `json:"volume"`
+}
+
+type QuickDepthResult struct {
+	Currency             string  `json:"currency"`
+	MaxProfitableOrders  int     `json:"max_profitable_orders"`
+	TotalEstimatedProfit float64 `json:"total_estimated_profit"`
+	BottleneckSide       string  `json:"bottleneck_side"`
+}
+
+// Legacy Depth Analysis Types (for backwards compatibility)
 type OrderSimulation struct {
 	OrderNumber    int     `json:"order_number"`
 	BuyPrice       float64 `json:"buy_price"`

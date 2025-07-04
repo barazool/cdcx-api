@@ -1,0 +1,23 @@
+{
+  "currency": "",
+  "buy_market": "",
+  "sell_market": "",
+  "start_time": "2025-07-04T10:50:44.163074217+05:30",
+  "end_time": "2025-07-04T10:50:44.242519849+05:30",
+  "total_profit": 0,
+  "total_volume": 0,
+  "total_investment": 0,
+  "orders": [],
+  "successful": false,
+  "timestamp": "2025-07-04T10:50:44.163074293+05:30",
+  "config": {
+    "max_position_usdt": 100,
+    "min_required_usdt": 10,
+    "stop_loss_pct": 3,
+    "order_timeout_seconds": 30,
+    "delay_between_orders": 2000,
+    "use_market_orders": true,
+    "max_orders_per_run": 5,
+    "risk_tolerance_level": "conservative"
+  }
+}
